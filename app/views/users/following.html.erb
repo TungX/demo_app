@@ -1,0 +1,10 @@
+<% provide(:title, 'Users following ' + @user.name) %>
+<div class="row">
+<%= render 'user_info'%>
+<h1>All users following of <%=@user.name%></h1>
+<aside class="col-md-4">
+<ul class="users">
+<%= render 'users'%>
+</ul>
+</aside>
+</div>

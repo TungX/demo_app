@@ -1,0 +1,26 @@
+<li id="entry-<%= entry.id %>">
+<span class="user"><%= link_to entry.user.name, entry.user %>
+-<b><%= entry.title%></b></span>
+<span class="content">
+<%= entry.content %>
+<%= image_tag entry.picture.url if entry.picture? %>
+</span>
+<i><span class="timestamp">
+   -Posted <%= time_ago_in_words(entry.created_at) %> ago.
+</span></i>
+<% @comments = entry.comments.all %>
+<%= render @comments%>
+<div class="content">
+<% result = logged_in? %>
+<% result &&= current_user.following?(entry.user) || current_user.id == entry.user.id %>
+<%if result %>
+<%= form_for(@comment) do |f| %>
+<% user_id = params[:id].nil? ? -1 : params[:id] %>
+  <%= f.hidden_field :entry_id, value: entry.id %>
+  <%= f.hidden_field :user_id, value: user_id %>
+  <%= f.text_field :content, placeholder: "Comment...." %>
+  <%= f.submit "Comment" %>
+<% end %>
+<% end %>
+</div>
+</li>
